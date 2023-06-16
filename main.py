@@ -5,6 +5,8 @@ from PyQt5.QtCore import Qt
 from gui_acentuado import Ui_MainWindow
 import os
 import cv2
+import numpy as np
+from scipy import ndimage
 
 class Main(QMainWindow):
     def __init__(self):
@@ -14,6 +16,7 @@ class Main(QMainWindow):
         self.ui.pushButton_cargar_img.clicked.connect(self.seleccionar_img)
         # bool de control
         self.original_cargada = False
+        self.cv_cargada = False
 
     # eventos
     def resizeEvent(self, event):
@@ -50,6 +53,8 @@ class Main(QMainWindow):
 
     def cargar_cv(self, ruta):
         self.img_original = cv2.imread(ruta)
+        self.r, self.g, self.b = cv2.split()
+        self.cv_cargada = True
 
     def imgcv2pixmap(self, img):
         altoimg, anchoimg, channels = img.shape
@@ -59,7 +64,14 @@ class Main(QMainWindow):
         )
         pixmap = QPixmap.fromImage(q_image)
         return pixmap
-
+    
+    def filtro_roberts(self, canal):
+        kernelx = np.array([[ 0, 1 ],[ -1, 0 ]])
+        kernely = np.array([[1, 0 ],[0,-1 ]])
+        x = ndimage.convolve( canal, kernelx )
+        y = ndimage.convolve( canal, kernely )
+        img_bordes = np.sqrt( np.square(x) + np.square(y))
+        return img_bordes
 
 
 
