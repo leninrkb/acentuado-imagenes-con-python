@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1059, 718)
+        MainWindow.resize(954, 718)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -73,6 +73,12 @@ class Ui_MainWindow(object):
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
+        self.label = QtWidgets.QLabel(self.frame_3)
+        self.label.setGeometry(QtCore.QRect(20, 10, 221, 19))
+        self.label.setObjectName("label")
+        self.graphicsView_roberts = QtWidgets.QGraphicsView(self.frame_3)
+        self.graphicsView_roberts.setGeometry(QtCore.QRect(20, 40, 261, 161))
+        self.graphicsView_roberts.setObjectName("graphicsView_roberts")
         self.gridLayout.addWidget(self.frame_3, 0, 1, 1, 1)
         self.frame_6 = QtWidgets.QFrame(self.frame)
         self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -104,6 +110,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label_datos_original.setText(_translate("MainWindow", "info"))
         self.pushButton_cargar_img.setText(_translate("MainWindow", "Cargar imagen"))
+        self.label.setText(_translate("MainWindow", "Filtro de Roberts"))
 
 
 if __name__ == "__main__":

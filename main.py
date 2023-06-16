@@ -1,3 +1,4 @@
+from multiprocessing.dummy import Process
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QGraphicsScene, QGraphicsPixmapItem
 from PyQt5.QtGui import QPixmap, QImage
@@ -7,6 +8,7 @@ import os
 import cv2
 import numpy as np
 from scipy import ndimage
+from multiprocessing import Process
 
 class Main(QMainWindow):
     def __init__(self):
@@ -41,6 +43,7 @@ class Main(QMainWindow):
         self.pixmap_original = QGraphicsPixmapItem(pixmap)
         self.mostrar_grafico(self.ui.graphicsView_img_original, self.pixmap_original)
         self.original_cargada = True
+        self.ui.label_datos_original.setText(f"Ancho: {pixmap.width()}px ~ Alto: {pixmap.height()}px")
         # opencv
         self.cargar_cv(ruta)
 
@@ -72,6 +75,19 @@ class Main(QMainWindow):
         y = ndimage.convolve( canal, kernely )
         img_bordes = np.sqrt( np.square(x) + np.square(y))
         return img_bordes
+    
+    def aplicar_roberts(self,r,g,b):
+        r = self.filtro_roberts(r)
+        g = self.filtro_roberts(g)
+        b = self.filtro_roberts(b)
+        img = cv2.merge([r,g,b])
+        pixmap = self.imgcv2pixmap(img)
+        self.mostrar_grafico(self.ui.graphicsView_roberts, pixmap)
+
+    def proceso_roberts(self,r,g,b):
+        proceso = Process(target=self.aplicar_roberts(r,g,b))
+        proceso.start()
+        proceso.join()
 
 
 
