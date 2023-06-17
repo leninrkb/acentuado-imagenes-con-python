@@ -28,6 +28,10 @@ class Main(QMainWindow):
         # 
         self.ui.pushButton_ver_roberts.clicked.connect(self.ver_roberts)
         self.ui.pushButton_ver_prewitt.clicked.connect(self.ver_prewitt)
+        self.ui.pushButton_ver_sobel.clicked.connect(self.ver_sobel)
+        self.ui.pushButton_ver_laplace.clicked.connect(self.ver_laplace)
+        self.ui.pushButton_ver_kirsch.clicked.connect(self.ver_kirsch)
+        self.ui.pushButton_ver_freichen.clicked.connect(self.ver_freichen)
         # bool de control
         self.original_cargada = False
         self.cv_cargada = False
@@ -162,11 +166,15 @@ class Main(QMainWindow):
             r = self.filtro_sobel(self.r)
             g = self.filtro_sobel(self.g)
             b = self.filtro_sobel(self.b)
-            img = cv2.merge((r,g,b))
-            pixmap = self.imgcv2pixmap(img)
+            self.img_sobel = cv2.merge((r,g,b))
+            pixmap = self.imgcv2pixmap(self.img_sobel)
             self.pixmap_sobel = QGraphicsPixmapItem(pixmap)
             self.mostrar_grafico(self.ui.graphicsView_sobel, self.pixmap_sobel)
             self.sobel_cargada = True
+
+    def ver_sobel(self):
+        if self.sobel_cargada:
+            self.ver(self.img_sobel)
 
     def filtro_laplace_gaussiano(self, canal):
         imagen_laplace = cv2.Laplacian(canal, cv2.CV_64F)
@@ -178,11 +186,15 @@ class Main(QMainWindow):
             r = self.filtro_laplace_gaussiano(self.r)
             g = self.filtro_laplace_gaussiano(self.g)
             b = self.filtro_laplace_gaussiano(self.b)
-            img = cv2.merge((r,g,b))
-            pixmap = self.imgcv2pixmap(img)
+            self.img_laplace = cv2.merge((r,g,b))
+            pixmap = self.imgcv2pixmap(self.img_laplace)
             self.pixmap_laplace = QGraphicsPixmapItem(pixmap)
             self.mostrar_grafico(self.ui.graphicsView_laplace, self.pixmap_laplace)
             self.laplace_cargada = True
+
+    def ver_laplace(self):
+        if self.laplace_cargada:
+            self.ver(self.img_laplace)
 
     def filtro_kirsch(self, canal):
         kernels = [
@@ -208,11 +220,15 @@ class Main(QMainWindow):
             r = self.filtro_kirsch(self.r)
             g = self.filtro_kirsch(self.g)
             b = self.filtro_kirsch(self.b)
-            img = cv2.merge((r,g,b))
-            pixmap = self.imgcv2pixmap(img)
+            self.img_kirsch = cv2.merge((r,g,b))
+            pixmap = self.imgcv2pixmap(self.img_kirsch)
             self.pixmap_kirsch = QGraphicsPixmapItem(pixmap)
             self.mostrar_grafico(self.ui.graphicsView_kirsch, self.pixmap_kirsch)
             self.kirsch_cargada = True
+
+    def ver_kirsch(self):
+        if self.kirsch_cargada:
+            self.ver(self.img_kirsch)
 
     def filtro_frei_chen(self, canal):
             mask_x = np.array([[-1, 0, 1], [-np.sqrt(2), 0, np.sqrt(2)], [-1, 0, 1]], dtype=np.float32)
@@ -228,11 +244,15 @@ class Main(QMainWindow):
             r = self.filtro_frei_chen(self.r)
             g = self.filtro_frei_chen(self.g)
             b = self.filtro_frei_chen(self.b)
-            img = cv2.merge((r,g,b))
-            pixmap = self.imgcv2pixmap(img)
+            self.img_freichen = cv2.merge((r,g,b))
+            pixmap = self.imgcv2pixmap(self.img_freichen)
             self.pixmap_freichen = QGraphicsPixmapItem(pixmap)
             self.mostrar_grafico(self.ui.graphicsView_freichen, self.pixmap_freichen)
             self.freichen_cargada = True
+
+    def ver_freichen(self):
+        if self.freichen_cargada:
+            self.ver(self.img_freichen)
 
 
 if __name__ == "__main__":

@@ -144,7 +144,7 @@
            <widget class="QGraphicsView" name="graphicsView_freichen"/>
           </item>
           <item row="2" column="0">
-           <widget class="QPushButton" name="pushButton_ver_freichan">
+           <widget class="QPushButton" name="pushButton_ver_freichen">
             <property name="text">
              <string>Ver</string>
             </property>
