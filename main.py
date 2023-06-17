@@ -27,7 +27,7 @@ class Main(QMainWindow):
         self.ui.pushButton_freichen.clicked.connect(self.aplicar_freichen)
         # 
         self.ui.pushButton_ver_roberts.clicked.connect(self.ver_roberts)
-        self.ui.pushButton_ver_prewitt.clicked.connect(self.ver_roberts)
+        self.ui.pushButton_ver_prewitt.clicked.connect(self.ver_prewitt)
         # bool de control
         self.original_cargada = False
         self.cv_cargada = False
@@ -142,11 +142,15 @@ class Main(QMainWindow):
             r = self.filtro_prewitt(self.r)
             g = self.filtro_prewitt(self.g)
             b = self.filtro_prewitt(self.b)
-            img = cv2.merge([r,g,b])
-            pixmap = self.imgcv2pixmap(img)
+            self.img_prewitt = cv2.merge([r,g,b])
+            pixmap = self.imgcv2pixmap(self.img_prewitt)
             self.pixmap_prewitt = QGraphicsPixmapItem(pixmap)
             self.mostrar_grafico(self.ui.graphicsView_prewitt, self.pixmap_prewitt)
             self.prewitt_cargada = True
+
+    def ver_prewitt(self):
+        if self.prewitt_cargada:
+            self.ver(self.img_prewitt)
     
     def filtro_sobel(self, canal):
         sobel = cv2.Sobel(src=canal, ddepth=cv2.CV_64F, dx=1, dy=1, ksize=5)
